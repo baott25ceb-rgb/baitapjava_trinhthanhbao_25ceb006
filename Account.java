@@ -1,54 +1,47 @@
 public class Account {
-
-    private String id;
-    private String name;
-    private int balance = 0;
-    public Account(String id,String name){
+    private int id;
+    private Customer customer;
+    private double balance = 0.0;
+    public Account(int id, Customer customer, double balance){
         this.id=id;
-        this.name=name;
-    }
-    public Account(String id,String name,int balance){
-        this.id=id;
-        this.name=name;
+        this.customer=customer;
         this.balance=balance;
     }
-    public String getID(){
+    public Account(int id, Customer customer) {
+        this.id = id;
+        this.customer = customer;
+    }
+
+    public int getId() {
         return id;
     }
-    public String getName(){
-        return name;
+
+    public Customer getCustomer() {
+        return customer;
     }
-    public int getBalance(){
+
+    public double getBalance() {
         return balance;
     }
-    public int credit(int amount){
-        balance+=amount;
-        return balance;
-    }
-    public int debit(int amount) {
-        if (amount <= balance) {
-            balance -= amount;
-        } else {
-            System.out.println("Amount exceeded balance");
-        }
-        return balance;
-    }
-    public int transferTo (Account Accountanother, int amount) {
-        if (amount <= balance) {
-            balance -= amount;
-            Accountanother.credit(amount);
-        } else {
-            System.out.println("Amount exceeded balance");
-        }
-        return balance;
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     @Override
     public String toString() {
-        return "Account{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", balance=" + balance +
-                '}';
+        return customer.getName()+"("+customer.getId()+") balance=$"+String.format("%.2f",balance);
+    }
+    public Account deposit(double amount){
+        balance +=amount;
+        return this;
+    }
+    public Account withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+        } else {
+            System.out.println("amount withdrawn exceeds the current balance!");
+        }
+        return this;
     }
 }
